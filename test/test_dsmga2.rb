@@ -1,11 +1,11 @@
 require 'minitest/autorun'
 require 'dsmga2'
 
-class TestDsmga2 < Minitest::Test
+class TestDSMGA2 < Minitest::Test
 
   def setup
-    @ga_1 = Dsmga2.new
-    @ga_2 = Dsmga2.new(13)
+    @ga_1 = DSMGA2.new
+    @ga_2 = DSMGA2.new(13)
     @best_chromosome = @ga_1.run
   end
 

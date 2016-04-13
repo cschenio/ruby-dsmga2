@@ -1,4 +1,4 @@
-class Dsmga2::Chromosome
+class DSMGA2::Chromosome
   def initialize
   end
   def local_search
