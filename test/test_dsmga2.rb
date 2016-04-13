@@ -3,11 +3,16 @@ require 'dsmga2'
 
 class TestDsmga2 < Minitest::Test
 
-  def test_population_is_default
-    @ga = Dsmga2.new
-    assert_equal 27, @ga.population.size
-    @ga = Dsmga2.new(13)
-    refute_equal 27, @ga.population.size
-    assert_equal 13, @ga.population.size
+  def setup
+    @ga_1 = Dsmga2.new
+    @ga_2 = Dsmga2.new(13)
   end
+
+  def test_population_initialization
+    assert_equal 27, @ga_1.population.size
+
+    refute_equal 27, @ga_2.population.size
+    assert_equal 13, @ga_2.population.size
+  end
+
 end
