@@ -8,8 +8,8 @@ class Dsmga2
   ##
   # Initialize the population with the given size.
   def initialize(size_of_population = 27)
-    population = Array.new(size_of_population) {|p| Dsmga2::Chromosome.new}
-    population.each {|p| p = p.local_search}
+    @population = Array.new(size_of_population) {|p| Dsmga2::Chromosome.new}
+    @population.each {|p| p = p.local_search}
   end
   
   ##
@@ -28,7 +28,7 @@ class Dsmga2
       execute_round.times do 
         linkage_set = Dsmga2::ILS.new(matrix)
         population.shuffle.each do |p|
-          [p, linkage_set] = Dsmga2::Mixing.restrict(p)
+          p, linkage_set = Dsmga2::Mixing.restrict(p)
           p = Dsmga2::Mixing.back(p, linkage_set)
         end
       end
@@ -42,3 +42,5 @@ class Dsmga2
   end
 
 end
+
+require 'dsmga2/chromosome'
