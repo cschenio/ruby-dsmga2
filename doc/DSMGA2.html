@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Dsmga2 - RDoc Documentation</title>
+<title>class DSMGA2 - RDoc Documentation</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
@@ -82,9 +82,9 @@
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-Dsmga2">
-  <h1 id="class-Dsmga2" class="class">
-    class Dsmga2
+<main role="main" aria-labelledby="class-DSMGA2">
+  <h1 id="class-DSMGA2" class="class">
+    class DSMGA2
   </h1>
 
   <section class="description">
@@ -119,7 +119,7 @@ of a given function.</p>
 
         <div class="method-description">
         
-        <p>An array of Dsmga2::Chromosome.</p>
+        <p>An array of <a href="DSMGA2/Chromosome.html">DSMGA2::Chromosome</a>.</p>
         
         </div>
       </div>
@@ -155,8 +155,8 @@ of a given function.</p>
           <div class="method-source-code" id="new-source">
             <pre><span class="ruby-comment"># File lib/dsmga2.rb, line 10</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">size_of_population</span> = <span class="ruby-value">27</span>)
-  <span class="ruby-identifier">population</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">size_of_population</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-constant">Dsmga2</span><span class="ruby-operator">::</span><span class="ruby-constant">Chromosome</span>.<span class="ruby-identifier">new</span>}
-  <span class="ruby-identifier">population</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">local_search</span>}
+  <span class="ruby-ivar">@population</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">size_of_population</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-constant">DSMGA2</span><span class="ruby-operator">::</span><span class="ruby-constant">Chromosome</span>.<span class="ruby-identifier">new</span>}
+  <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span> = <span class="ruby-identifier">p</span>.<span class="ruby-identifier">local_search</span>}
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -189,7 +189,8 @@ of a given function.</p>
 
         <div class="method-description">
           
-          <p>Return a Dsmga2::Chromosome with the greatest fitness.</p>
+          <p>Return a <a href="DSMGA2/Chromosome.html">DSMGA2::Chromosome</a> with the
+greatest fitness.</p>
 <dl class="rdoc-list note-list"><dt>pressure
 <dd>
 <p>The selection pressure for the tournament selection in building the DSM.</p>
@@ -205,20 +206,20 @@ of a given function.</p>
             <pre><span class="ruby-comment"># File lib/dsmga2.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">run</span>(<span class="ruby-identifier">pressure</span> = <span class="ruby-value">2</span>, <span class="ruby-identifier">execute_round</span> = <span class="ruby-value">100</span>)
   <span class="ruby-keyword">until</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">termination_criteria_meet</span> <span class="ruby-keyword">do</span>
-    <span class="ruby-comment"># selected_population = Dsmga2::Selection.tournament(population, pressure)</span>
-    <span class="ruby-comment"># matrix = Dsmga2::DSM.new(selected_population)</span>
-    <span class="ruby-identifier">matrix</span> = <span class="ruby-constant">Dsmga2</span><span class="ruby-operator">::</span><span class="ruby-constant">DSM</span>.<span class="ruby-identifier">new</span>(
-      <span class="ruby-constant">Dsmga2</span><span class="ruby-operator">::</span><span class="ruby-constant">Selection</span>.<span class="ruby-identifier">tournament</span>(<span class="ruby-identifier">population</span>, <span class="ruby-identifier">pressure</span>)
+    <span class="ruby-comment"># selected_population = DSMGA2::Selection.tournament(population, pressure)</span>
+    <span class="ruby-comment"># matrix = DSMGA2::DSM.new(selected_population)</span>
+    <span class="ruby-identifier">matrix</span> = <span class="ruby-constant">DSMGA2</span><span class="ruby-operator">::</span><span class="ruby-constant">DSM</span>.<span class="ruby-identifier">new</span>(
+      <span class="ruby-constant">DSMGA2</span><span class="ruby-operator">::</span><span class="ruby-constant">Selection</span>.<span class="ruby-identifier">tournament</span>(<span class="ruby-ivar">@population</span>, <span class="ruby-identifier">pressure</span>)
     )
     <span class="ruby-identifier">execute_round</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span> 
-      <span class="ruby-identifier">linkage_set</span> = <span class="ruby-constant">Dsmga2</span><span class="ruby-operator">::</span><span class="ruby-constant">ILS</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">matrix</span>)
-      <span class="ruby-identifier">population</span>.<span class="ruby-identifier">shuffle</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
-        [<span class="ruby-identifier">p</span>, <span class="ruby-identifier">linkage_set</span>] = <span class="ruby-constant">Dsmga2</span><span class="ruby-operator">::</span><span class="ruby-constant">Mixing</span>.<span class="ruby-identifier">restrict</span>(<span class="ruby-identifier">p</span>)
-        <span class="ruby-identifier">p</span> = <span class="ruby-constant">Dsmga2</span><span class="ruby-operator">::</span><span class="ruby-constant">Mixing</span>.<span class="ruby-identifier">back</span>(<span class="ruby-identifier">p</span>, <span class="ruby-identifier">linkage_set</span>)
+      <span class="ruby-identifier">linkage_set</span> = <span class="ruby-constant">DSMGA2</span><span class="ruby-operator">::</span><span class="ruby-constant">ILS</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">matrix</span>)
+      <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">shuffle</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">p</span>, <span class="ruby-identifier">linkage_set</span> = <span class="ruby-constant">DSMGA2</span><span class="ruby-operator">::</span><span class="ruby-constant">Mixing</span>.<span class="ruby-identifier">restrict</span>(<span class="ruby-identifier">p</span>)
+        <span class="ruby-identifier">p</span> = <span class="ruby-constant">DSMGA2</span><span class="ruby-operator">::</span><span class="ruby-constant">Mixing</span>.<span class="ruby-identifier">back</span>(<span class="ruby-identifier">p</span>, <span class="ruby-identifier">linkage_set</span>)
       <span class="ruby-keyword">end</span>
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-identifier">population</span>.<span class="ruby-identifier">max_by</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">fitness</span>}
+  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">max_by</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">fitness</span>}
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -251,6 +252,7 @@ of a given function.</p>
           <div class="method-source-code" id="termination_criteria_meet-source">
             <pre><span class="ruby-comment"># File lib/dsmga2.rb, line 41</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">termination_criteria_meet</span> 
+  <span class="ruby-keyword">true</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
