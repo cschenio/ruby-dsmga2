@@ -23,22 +23,23 @@ class Dsmga2
       # selected_population = Dsmga2::Selection.tournament(population, pressure)
       # matrix = Dsmga2::DSM.new(selected_population)
       matrix = Dsmga2::DSM.new(
-        Dsmga2::Selection.tournament(population, pressure)
+        Dsmga2::Selection.tournament(@population, pressure)
       )
       execute_round.times do 
         linkage_set = Dsmga2::ILS.new(matrix)
-        population.shuffle.each do |p|
+        @population.shuffle.each do |p|
           p, linkage_set = Dsmga2::Mixing.restrict(p)
           p = Dsmga2::Mixing.back(p, linkage_set)
         end
       end
     end
-    return population.max_by {|p| p.fitness}
+    return @population.max_by {|p| p.fitness}
   end
 
   ##
   # Return a boolean whether the termination criteria meet or not.
   def termination_criteria_meet 
+    true
   end
 
 end
