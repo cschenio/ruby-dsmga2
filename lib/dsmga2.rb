@@ -6,8 +6,8 @@ class DSMGA2
   attr_accessor :population
   ##
   # Initialize the population with the given size.
-  def initialize(size_of_population = 27)
-    @population = Array.new(size_of_population) {|p| DSMGA2::Chromosome.new}
+  def initialize(size_of_population = 27, chromo_length = 27)
+    @population = Array.new(size_of_population) {|p| DSMGA2::Chromosome.new(27)}
     @population.each {|p| p = p.local_search}
   end
   
