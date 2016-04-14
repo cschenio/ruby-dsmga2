@@ -4,7 +4,6 @@
 class DSMGA2
   # An array of DSMGA2::Chromosome.
   attr_accessor :population
-
   ##
   # Initialize the population with the given size.
   def initialize(size_of_population = 27)
@@ -18,15 +17,16 @@ class DSMGA2
   #   The selection pressure for the tournament selection in building the DSM.
   # execute_round::
   #   The executing round for every generation.
-  def run(pressure = 2, execute_round = 100)
-    until self.termination_criteria_meet do
+  def run(pressure = 2, execute_round = 100, generation = 100)
+    generation.times do 
+      break if self.termination_criteria_meet
       # selected_population = DSMGA2::Selection.tournament(population, pressure)
       # matrix = DSMGA2::DSM.new(selected_population)
       matrix = DSMGA2::DSM.new(
         DSMGA2::Selection.tournament(@population, pressure)
       )
       execute_round.times do 
-        linkage_set = DSMGA2::ILS.new(matrix)
+        # linkage_set = DSMGA2::ILS.new
         @population.shuffle.each do |p|
           p, linkage_set = DSMGA2::Mixing.restrict(p)
           p = DSMGA2::Mixing.back(p, linkage_set)
@@ -39,9 +39,12 @@ class DSMGA2
   ##
   # Return a boolean whether the termination criteria meet or not.
   def termination_criteria_meet 
-    true
+    false
   end
 
 end
 
 require 'dsmga2/chromosome'
+require 'dsmga2/dsm'
+require 'dsmga2/selection'
+require 'dsmga2/mixing'
