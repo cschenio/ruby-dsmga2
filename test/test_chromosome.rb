@@ -41,4 +41,11 @@ class TestChromosome < Minitest::Test
       @chromo_1.fitness
     end
   end
+
+  def test_chromosome_change
+    @chromo_6 = OneMax::Chromosome.new(10){0}
+    assert_equal 0, @chromo_6.value
+    @chromo_6.change((0...5),Array.new(5){1})
+    assert_equal 5, @chromo_6.value
+  end
 end

@@ -13,6 +13,13 @@ class DSMGA2::Chromosome
     @value = fitness
   end
 
+  def change(range, input)
+    range.each do |i|
+      @genes[i] = input[i-range.begin]
+    end
+    @value = fitness
+  end
+
   def local_search
 
   end
