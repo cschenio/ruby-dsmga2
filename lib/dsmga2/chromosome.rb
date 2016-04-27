@@ -8,10 +8,14 @@ class DSMGA2::Chromosome
       @genes = Array.new(@length){yield}
       @value = fitness
     when DSMGA2::Chromosome
-      @length = item.length
-      @genes = item.genes
-      @value = item.value
+      deep_clone(item)
     end
+  end
+  
+  def deep_clone(item)
+    @length = item.length
+    @genes = item.genes
+    @value = item.value
   end
 
   def change(range, input)
@@ -22,7 +26,11 @@ class DSMGA2::Chromosome
   end
 
   def local_search
-
+    (0...@genes.length).each do |i|
+      tmp = self.class.new(self.itself)
+      tmp.change((i..i), 1-@genes[i])
+      deep_clone(tmp) if tmp.value > self.value
+    end
   end
   
   def fitness
