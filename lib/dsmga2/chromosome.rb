@@ -1,11 +1,25 @@
 class DSMGA2::Chromosome
-  def initialize
+  attr_reader :value, :genes, :length
+
+  def initialize(item)
+    case item 
+    when Fixnum
+      @length = item
+      @genes = Array.new(@length){yield}
+    when DSMGA2::Chromosome
+      @length = item.length
+      @genes = item.genes
+    end
+    @value = fitness
   end
+
   def local_search
-  end
 
+  end
+  
   def fitness
-    return 3
+    0
   end
 
+  private :fitness
 end

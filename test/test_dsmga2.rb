@@ -17,8 +17,8 @@ class TestDSMGA2 < Minitest::Test
   end
 
   def test_outcome_of_run
-    assert_equal 3, @best_chromosome.fitness
-    refute_equal 4, @best_chromosome.fitness
+    assert_equal 0, @best_chromosome.value
+    refute_equal 1, @best_chromosome.value
   end
 
 end

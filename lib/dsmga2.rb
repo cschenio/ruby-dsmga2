@@ -7,7 +7,7 @@ class DSMGA2
   ##
   # Initialize the population with the given size.
   def initialize(size_of_population = 27, chromo_length = 27)
-    @population = Array.new(size_of_population) {|p| DSMGA2::Chromosome.new(27)}
+    @population = Array.new(size_of_population) {|p| DSMGA2::Chromosome.new(chromo_length){0}}
     @population.each {|p| p = p.local_search}
   end
   
@@ -33,7 +33,7 @@ class DSMGA2
         end
       end
     end
-    return @population.max_by {|p| p.fitness}
+    return @population.max_by {|p| p.value}
   end
 
   ##
