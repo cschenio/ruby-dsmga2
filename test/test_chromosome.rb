@@ -26,6 +26,9 @@ class TestChromosome < Minitest::Test
     @chromo_3 = HalfHalf::Chromosome.new(27){1}
     @chromo_4 = HalfHalf::Chromosome.new(27){0}
     @chromo_5 = DSMGA2::Chromosome.new(@chromo_1)
+    @chromo_6 = OneMax::Chromosome.new(10){0}
+    @chromo_7 = OneMax::Chromosome.new(10){0}
+    @chromo_8 = OneMax::Chromosome.new(10){0}
   end
 
   def test_chromosome_constructor_and_fitness
@@ -33,7 +36,7 @@ class TestChromosome < Minitest::Test
     assert_equal 0,  @chromo_2.value
     assert_equal 14, @chromo_3.value
     assert_equal 13, @chromo_4.value
-    assert_equal 0,  @chromo_5.value
+    assert_equal 27, @chromo_5.value
   end
 
   def test_fitness_is_private
@@ -43,9 +46,22 @@ class TestChromosome < Minitest::Test
   end
 
   def test_chromosome_change
-    @chromo_6 = OneMax::Chromosome.new(10){0}
     assert_equal 0, @chromo_6.value
     @chromo_6.change((0...5),Array.new(5){1})
     assert_equal 5, @chromo_6.value
+  end
+
+  def test_chromosome_local_search
+    assert_equal 0,  @chromo_7.value
+    @chromo_7.local_search
+    assert_equal 10, @chromo_7.value
+  end
+
+  def test_deep_clone
+    tmp = OneMax::Chromosome.new(10){1}
+    assert_equal 10, tmp.value
+    tmp.deep_clone(@chromo_8)
+    assert_equal 0, tmp.value
+    refute_equal tmp, @chrome_8 
   end
 end
