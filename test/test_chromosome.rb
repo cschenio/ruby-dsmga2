@@ -47,8 +47,15 @@ class TestChromosome < Minitest::Test
 
   def test_chromosome_change
     assert_equal 0, @chromo_6.value
-    @chromo_6.change((0...5),Array.new(5){1})
+    @chromo_6.change((0...5), Array.new(5){1})
     assert_equal 5, @chromo_6.value
+  skip
+    assert_raises IndexError do
+      @chromo_6.change((0..5), Array.new(5){1})
+    end
+    assert_raises IndexError do
+      @chromo_6.change((0...5), Array.new(6){1})
+    end
   end
 
   def test_chromosome_local_search

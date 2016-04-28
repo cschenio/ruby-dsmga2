@@ -23,6 +23,8 @@ class DSMGA2::Chromosome
   # Change the genes of the range to the value of given input_array.
   # Raises IndexError if range.size is not input_array.size 
   def change(range, input_array)
+    # raise IndexError if range.size != input_array.size
+    # TODO: Make it raise error while not harming other methods.
     range.each do |i|
       @genes[i] = input_array[i-range.begin]
     end
