@@ -1,3 +1,7 @@
-Thu, 14 Apr 2016 00:00:52 +0800
-lib/dsmga2/chromosome.rb	Wed, 13 Apr 2016 23:55:31 +0800
-lib/dsmga2.rb	Wed, 13 Apr 2016 23:55:31 +0800
+Thu, 28 Apr 2016 09:27:22 +0800
+lib/dsmga2/ils.rb	Thu, 28 Apr 2016 01:17:02 +0800
+lib/dsmga2/mixing.rb	Thu, 28 Apr 2016 01:17:02 +0800
+lib/dsmga2/selection.rb	Thu, 28 Apr 2016 01:17:02 +0800
+lib/dsmga2/dsm.rb	Thu, 28 Apr 2016 01:17:02 +0800
+lib/dsmga2/chromosome.rb	Thu, 28 Apr 2016 09:27:19 +0800
+lib/dsmga2.rb	Thu, 28 Apr 2016 01:17:02 +0800

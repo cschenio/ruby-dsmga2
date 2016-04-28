@@ -72,7 +72,9 @@
     
     <li ><a href="#method-c-new">::new</a>
     
-    <li ><a href="#method-i-fitness">#fitness</a>
+    <li ><a href="#method-i-change">#change</a>
+    
+    <li ><a href="#method-i-deep_clone">#deep_clone</a>
     
     <li ><a href="#method-i-local_search">#local_search</a>
     
@@ -89,6 +91,8 @@
 
   <section class="description">
     
+<p>Each instance of the class represent an individual.</p>
+
   </section>
 
   
@@ -102,6 +106,53 @@
     
 
     
+    <section class="attribute-method-details" class="method-section">
+      <header>
+        <h3>Attributes</h3>
+      </header>
+
+      
+      <div id="attribute-i-genes" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">genes</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-length" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">length</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-value" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">value</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section>
+    
 
     
      <section id="public-class-5Buntitled-5D-method-details" class="method-section">
@@ -114,7 +165,7 @@
         
         <div class="method-heading">
           <span class="method-name">new</span><span
-            class="method-args">()</span>
+            class="method-args">(item) { || ... }</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -123,14 +174,26 @@
 
         <div class="method-description">
           
-          
+          <p>A Fixnum or a <a href="Chromosome.html">DSMGA2::Chromosome</a> can be
+passed into. The former create a new <a
+href="Chromosome.html">Chromosome</a> with length <a
+href="'item'">param</a>. The latter <a
+href="Chromosome.html#method-i-deep_clone">#deep_clone</a> the item.</p>
           
           
 
           
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File lib/dsmga2/chromosome.rb, line 2</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>
+            <pre><span class="ruby-comment"># File lib/dsmga2/chromosome.rb, line 7</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">item</span>)
+  <span class="ruby-keyword">case</span> <span class="ruby-identifier">item</span> 
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">Fixnum</span>
+    <span class="ruby-ivar">@length</span> = <span class="ruby-identifier">item</span>
+    <span class="ruby-ivar">@genes</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@length</span>){<span class="ruby-keyword">yield</span>}
+    <span class="ruby-ivar">@value</span> = <span class="ruby-identifier">fitness</span>
+  <span class="ruby-keyword">when</span> <span class="ruby-constant">DSMGA2</span><span class="ruby-operator">::</span><span class="ruby-constant">Chromosome</span>
+    <span class="ruby-identifier">deep_clone</span>(<span class="ruby-identifier">item</span>)
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -150,11 +213,11 @@
        </header>
 
     
-      <div id="method-i-fitness" class="method-detail ">
+      <div id="method-i-change" class="method-detail ">
         
         <div class="method-heading">
-          <span class="method-name">fitness</span><span
-            class="method-args">()</span>
+          <span class="method-name">change</span><span
+            class="method-args">(range, input_array)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -163,15 +226,54 @@
 
         <div class="method-description">
           
-          
+          <p>Change the genes of the range to the value of given input_array. Raises
+IndexError if range.size is not input_array.size</p>
           
           
 
           
-          <div class="method-source-code" id="fitness-source">
-            <pre><span class="ruby-comment"># File lib/dsmga2/chromosome.rb, line 7</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">fitness</span>
-  <span class="ruby-keyword">return</span> <span class="ruby-value">3</span>
+          <div class="method-source-code" id="change-source">
+            <pre><span class="ruby-comment"># File lib/dsmga2/chromosome.rb, line 25</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">change</span>(<span class="ruby-identifier">range</span>, <span class="ruby-identifier">input_array</span>)
+  <span class="ruby-identifier">range</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+    <span class="ruby-ivar">@genes</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-identifier">input_array</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">-</span><span class="ruby-identifier">range</span>.<span class="ruby-identifier">begin</span>]
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-ivar">@value</span> = <span class="ruby-identifier">fitness</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-deep_clone" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">deep_clone</span><span
+            class="method-args">(chromo)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Clone the length, genes, and value of the given chromo.</p>
+          
+          
+
+          
+          <div class="method-source-code" id="deep_clone-source">
+            <pre><span class="ruby-comment"># File lib/dsmga2/chromosome.rb, line 18</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">deep_clone</span>(<span class="ruby-identifier">chromo</span>)
+  <span class="ruby-ivar">@length</span> = <span class="ruby-identifier">chromo</span>.<span class="ruby-identifier">length</span>
+  <span class="ruby-ivar">@genes</span> = <span class="ruby-identifier">chromo</span>.<span class="ruby-identifier">genes</span>
+  <span class="ruby-ivar">@value</span> = <span class="ruby-identifier">chromo</span>.<span class="ruby-identifier">value</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -196,14 +298,20 @@
 
         <div class="method-description">
           
-          
+          <p>Bitwise flip and take if the fitness value increase, time-complexity is
+O(length)</p>
           
           
 
           
           <div class="method-source-code" id="local_search-source">
-            <pre><span class="ruby-comment"># File lib/dsmga2/chromosome.rb, line 4</span>
+            <pre><span class="ruby-comment"># File lib/dsmga2/chromosome.rb, line 33</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">local_search</span>
+  (<span class="ruby-value">0</span><span class="ruby-operator">...</span><span class="ruby-ivar">@genes</span>.<span class="ruby-identifier">length</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">tmp</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">itself</span>)
+    <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">change</span>((<span class="ruby-identifier">i</span><span class="ruby-operator">..</span><span class="ruby-identifier">i</span>), <span class="ruby-value">1</span><span class="ruby-operator">-</span><span class="ruby-ivar">@genes</span>[<span class="ruby-identifier">i</span>])
+    <span class="ruby-identifier">deep_clone</span>(<span class="ruby-identifier">tmp</span>) <span class="ruby-keyword">if</span> <span class="ruby-identifier">tmp</span>.<span class="ruby-identifier">value</span> <span class="ruby-operator">&gt;</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">value</span>
+  <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           
